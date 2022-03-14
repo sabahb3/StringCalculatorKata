@@ -4,47 +4,21 @@ namespace StringCalculator.Test;
 
 public class StringCalculatorTest
 {
-    [Fact]
-    public void Should_Return_Zero_When_Adding_An_Empty_String()
+    [Theory]
+    [InlineData(" ", 0)]
+    [InlineData("1", 1)]
+    [InlineData("1,2", 3)]
+    public void ShouldReturnAdditionResultOfStringContainingNumbers(string numbers, int expectedResult)
     {
         //Arrange
         StringCalculator stringCalculator = new StringCalculator();
-        string numbers = " ";
         
         // Act
         int result = stringCalculator.add(numbers);
         
         // Assert
-        Assert.Equal(0,result);
-
+        Assert.Equal(expectedResult,result);   
     }
-    [Fact]
-    public void Should_Return_The_Same_Number_When_Adding_String_With_Single_Number()
-    {
-        //Arrange
-        StringCalculator stringCalculator = new StringCalculator();
-        string numbers = "1";
-    
-        // Act
-        int result = stringCalculator.add(numbers);
-    
-        // Assert
-        Assert.Equal(1,result);
+        
 
-    }
-    [Fact]
-    public void Should_Return_The_Addition_Result_When_Adding_String_With_Two_Numbers()
-    {
-        //Arrange
-        StringCalculator stringCalculator = new StringCalculator();
-        string numbers = "1,2 ";
-    
-        // Act
-        int result = stringCalculator.add(numbers);
-    
-        // Assert
-        Assert.Equal(3,result);
-
-    }
-    
 }
