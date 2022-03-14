@@ -11,7 +11,7 @@ public class StringCalculator
             case 1:
                 sum = AddSingleNumber(digits[0]);
                 break;
-            case 2:
+            default:
                 sum = AddMoreThanOneNumber(digits);
                 break;
         }
