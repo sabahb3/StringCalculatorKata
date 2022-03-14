@@ -32,4 +32,19 @@ public class StringCalculatorTest
         Assert.Equal(1,result);
 
     }
+    [Fact]
+    public void Should_Return_The_Addition_Result_When_Adding_String_With_Two_Numbers()
+    {
+        //Arrange
+        StringCalculator stringCalculator = new StringCalculator();
+        string numbers = "1,2 ";
+    
+        // Act
+        int result = stringCalculator.add(numbers);
+    
+        // Assert
+        Assert.Equal(3,result);
+
+    }
+    
 }

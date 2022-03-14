@@ -2,5 +2,6 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=fd0f9ce9_002D4826_002D4a75_002Daa06_002D0dcbbb55ea01/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Should_Return_Same_Number_When_Adding_String_With_Single_Number" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::8C964FCC-ABE3-4704-B6FE-9A1DCE9DF60A::net6.0::StringCalculator.Test.StringCalculatorTest.Should_Return_The_Same_Number_When_Adding_String_With_Single_Number&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::8C964FCC-ABE3-4704-B6FE-9A1DCE9DF60A::net6.0::StringCalculator.Test.StringCalculatorTest.Should_Return_The_Addition_Result_When_Adding_String_With_Two_Numbers&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
