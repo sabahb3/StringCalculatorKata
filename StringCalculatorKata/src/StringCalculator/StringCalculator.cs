@@ -4,30 +4,55 @@ public class StringCalculator
 {
     public int Add(string numbers)
     {
-        var digits = numbers.Split(',');
+        var parsedString = ParseString(numbers);
+        var digits = parsedString.numbers.Split(parsedString.Delimiter.ToArray());
         return AddNumbers(digits);
     }
-    
+
+    private (List<char> Delimiter, string numbers) ParseString(string numbers)
+    {
+        var delimiters = new List<char>();
+        var index = 0;
+        if (numbers.StartsWith("\\"))
+        {
+            index = 1;
+            while (numbers[index] != '\n')
+            {
+                delimiters.Add(numbers[index]);
+                index++;
+                if (index > numbers.Length)
+                    throw new Exception("Invalid arguments");
+            }
+
+            if (index < numbers.Length) index++;
+        }
+        else
+        {
+            delimiters.Add(',');
+        }
+
+        return (delimiters, new string(numbers.Substring(index)));
+    }
+
+
     private int AddNumbers(string[] numbers)
     {
-        int sum = 0;
+        var sum = 0;
         foreach (var number in numbers)
         {
-            if(string.IsNullOrWhiteSpace(number))continue;
+            if (string.IsNullOrWhiteSpace(number)) continue;
             if (number.Contains('\n'))
             {
                 sum += AddTwoNumbersWithNewLine(number);
                 continue;
             }
+
             if (int.TryParse(number, out var num))
-            {
                 sum += num;
-            }
             else
-            {
-                break;
-            }
+                throw new Exception("Invalid arguments");
         }
+
         return sum;
     }
 
@@ -42,12 +67,14 @@ public class StringCalculator
             }
             else
             {
-                int.TryParse(digits[0] , out var num0);
-                int.TryParse(digits[1], out var num1);
-                return num0 + num1;
+                if (int.TryParse(digits[0], out var num0) &&
+                    int.TryParse(digits[1], out var num1))
+                    return num0 + num1;
+                else
+                    throw new Exception("Invalid arguments");
             }
-            
         }
+
         throw new Exception("Invalid arguments");
     }
 }
