@@ -59,6 +59,8 @@ public class StringCalculatorTest
     [Theory]
     [InlineData("\\;.\n-1;0", "negatives not allowed: -1")]
     [InlineData("1,0,-2", "negatives not allowed: -2")]
+    [InlineData("1,0,-1,-2", "negatives not allowed: -1 -2")]
+
     public void ShouldThrowExceptionWhenTheStringContainsNegativeNumbers(string numbers, string expectedMessage)
     {
         //Arrange

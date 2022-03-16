@@ -38,29 +38,35 @@ public class StringCalculator
     private int AddNumbers(string[] numbers)
     {
         var sum = 0;
+        var negativeNumber = string.Empty;
         foreach (var number in numbers)
         {
             if (string.IsNullOrWhiteSpace(number)) continue;
             if (number.Contains('\n'))
             {
-                sum += AddTwoNumbersWithNewLine(number);
+                var addingTwoNumberResult = AddTwoNumbersWithNewLine(number);
+                sum += addingTwoNumberResult.sum;
+                if (!string.IsNullOrEmpty(addingTwoNumberResult.NegativeNumber))
+                    negativeNumber += addingTwoNumberResult.NegativeNumber;
                 continue;
             }
 
             if (int.TryParse(number, out var num))
             {
-                CheckIfNegative(num);
-                sum += num;
+                if (CheckIfNegative(num)) negativeNumber += $"{num} ";
+                else
+                    sum += num;
             }
             else
                 throw new Exception("Invalid arguments");
         }
-
+        if(!string.IsNullOrEmpty(negativeNumber)) AnnouncingPresenceOfNegativeNumbers(negativeNumber);
         return sum;
     }
 
-    private int AddTwoNumbersWithNewLine(string numbers)
+    private (int sum, string NegativeNumber) AddTwoNumbersWithNewLine(string numbers)
     {
+        var negativeNumber=string.Empty;
         var digits = numbers.Split('\n');
         if (digits.Length == 2)
         {
@@ -73,9 +79,12 @@ public class StringCalculator
                 if (int.TryParse(digits[0], out var num0) &&
                     int.TryParse(digits[1], out var num1))
                 {
-                    CheckIfNegative(num0);
-                    CheckIfNegative(num1);
-                    return num0 + num1;
+                    var sum = 0;
+                    if (!CheckIfNegative(num0) && !CheckIfNegative(num1))
+                        sum += num0 + num1;
+                    else if(CheckIfNegative(num0))negativeNumber+=$"{num0} ";
+                    else if(CheckIfNegative(num1))negativeNumber+=$"{num1} ";
+                    return (sum,negativeNumber);
                 }
                 else
                     throw new Exception("Invalid arguments");
@@ -85,11 +94,14 @@ public class StringCalculator
         throw new Exception("Invalid arguments");
     }
 
-    private void CheckIfNegative(int num)
+    private bool CheckIfNegative(int num)
     {
-        if (num < 0)
-        {
-            throw new Exception($"negatives not allowed: {num}");
-        }
+        if (num < 0)return true;
+        return false;
+    }
+
+    private void AnnouncingPresenceOfNegativeNumbers(string numbers)
+    {
+        throw new Exception($"negatives not allowed: {numbers}".Trim());
     }
 }
