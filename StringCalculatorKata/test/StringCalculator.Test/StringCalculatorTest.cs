@@ -60,7 +60,6 @@ public class StringCalculatorTest
     [InlineData("\\;.\n-1;0", "negatives not allowed: -1")]
     [InlineData("1,0,-2", "negatives not allowed: -2")]
     [InlineData("1,0,-1,-2", "negatives not allowed: -1 -2")]
-
     public void ShouldThrowExceptionWhenTheStringContainsNegativeNumbers(string numbers, string expectedMessage)
     {
         //Arrange
@@ -72,5 +71,21 @@ public class StringCalculatorTest
         // Assert
         var exception = Assert.Throws<Exception>(add);
         Assert.Equal(expectedMessage, exception.Message);
+    }
+    
+    [Theory]
+    [InlineData("\\;.\n1;0;1005", 1)]
+    [InlineData("\\;.\n1;0.1000", 1001)]
+    [InlineData("\\;.\n1;0.2020",1 )]
+    public void ShouldReturnAdditionResultWhereIgnoringNumbersThatExceed1000(string numbers, int expectedResult)
+    {
+        //Arrange
+        var stringCalculator = new StringCalculator();
+
+        // Act
+        var result = stringCalculator.Add(numbers);
+
+        // Assert
+        Assert.Equal(expectedResult, result);
     }
 }
