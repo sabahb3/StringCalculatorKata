@@ -48,7 +48,10 @@ public class StringCalculator
             }
 
             if (int.TryParse(number, out var num))
+            {
+                CheckIfNegative(num);
                 sum += num;
+            }
             else
                 throw new Exception("Invalid arguments");
         }
@@ -69,12 +72,24 @@ public class StringCalculator
             {
                 if (int.TryParse(digits[0], out var num0) &&
                     int.TryParse(digits[1], out var num1))
+                {
+                    CheckIfNegative(num0);
+                    CheckIfNegative(num1);
                     return num0 + num1;
+                }
                 else
                     throw new Exception("Invalid arguments");
             }
         }
 
         throw new Exception("Invalid arguments");
+    }
+
+    private void CheckIfNegative(int num)
+    {
+        if (num < 0)
+        {
+            throw new Exception($"negatives not allowed: {num}");
+        }
     }
 }
