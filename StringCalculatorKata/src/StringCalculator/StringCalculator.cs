@@ -8,22 +8,22 @@ public class StringCalculator
     {
         if (string.IsNullOrWhiteSpace(numbers)) return 0;
         var parsedString = ParseString(numbers);
-        var num =string.Join(string.Empty, parsedString.numbers);
+        var num = string.Join(string.Empty, parsedString.numbers);
         var delimiters = parsedString.delimiter.ToArray();
-        var digits =num.Split(delimiters);
+        var digits = num.Split(delimiters);
         return AddNumbers(digits);
     }
 
-    private (List<char> delimiter,List<Char> numbers) ParseString(string numbers)
+    private (List<char> delimiter, List<char> numbers) ParseString(string numbers)
     {
         var delimiters = new List<char>();
-        var num =  new List<char>();
+        var num = new List<char>();
         if (numbers.Contains('\\') && numbers.Contains('\n'))
         {
             delimiters = numbers.Skip(1).TakeWhile(s => s != '\n').ToList();
             num = numbers.SkipWhile(n => n != '\n').Skip(1).ToList();
         }
-        else if(numbers.Contains('\\')&&!numbers.Contains('\n'))
+        else if (numbers.Contains('\\') && !numbers.Contains('\n'))
         {
             throw new Exception("Invalid arguments");
         }
@@ -32,6 +32,7 @@ public class StringCalculator
             num = numbers.Select(n => n).ToList();
             delimiters.Add(',');
         }
+
         delimiters.Add('\n');
         return (delimiters, num);
     }
@@ -39,36 +40,18 @@ public class StringCalculator
 
     private int AddNumbers(string[] numbers)
     {
-        var sum = 0;
-        var negativeNumber = new List<int>();
-        foreach (var number in numbers)
-        {
-            if (string.IsNullOrWhiteSpace(number))
-            {
-                throw new Exception("Invalid arguments");
-            }
-            if (int.TryParse(number, out var num))
-            {
-                if (CheckIfNegative(num))
-                {
-                    negativeNumber.Add(num);
-                }
-                else
-                {
-                    if (num <= BigNumber) sum += num;
-                }
-            }
-            else
-            {
-                throw new Exception("Invalid arguments");
-            }
-        }
+        if (numbers.Any(string.IsNullOrWhiteSpace)) throw new Exception("Invalid arguments");
 
-        if (negativeNumber.Count>0) AnnouncingPresenceOfNegativeNumbers(negativeNumber);
-        return sum;
+        if (!numbers.All(s => int.TryParse(s, out var num)))
+        {
+            throw new Exception("Invalid arguments");
+        }
+        var negativeNumber = numbers.Select(int.Parse).Where(CheckIfNegative).ToList();
+        if (negativeNumber.Any()) AnnouncingPresenceOfNegativeNumbers(negativeNumber);
+        return numbers.Select(int.Parse).Where(num => num <= BigNumber).Sum();
     }
-    
-    
+
+
     private bool CheckIfNegative(int num)
     {
         if (num < 0) return true;
