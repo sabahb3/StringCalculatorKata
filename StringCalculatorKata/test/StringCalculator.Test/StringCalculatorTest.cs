@@ -88,4 +88,24 @@ public class StringCalculatorTest
         // Assert
         Assert.Equal(expectedResult, result);
     }
+    
+    [Theory]
+    [InlineData(",","Invalid arguments")]
+    [InlineData("\\,;.","Invalid arguments")]
+    [InlineData("1,","Invalid arguments")]
+    [InlineData("1\n","Invalid arguments")]
+    [InlineData("1\n2 3","Invalid arguments")]
+    [InlineData("1\n,2","Invalid arguments")]
+    public void ShouldThrowExceptionWhenTheStringIsInvalid(string numbers, string expectedMessage)
+    {
+        // Arrange
+        var stringCalculator = new StringCalculator();
+
+        // Act
+        Action add = () => stringCalculator.Add(numbers);
+
+        // Assert
+        var exception = Assert.Throws<Exception>(add);
+        Assert.Equal(expectedMessage, exception.Message);
+    }
 }

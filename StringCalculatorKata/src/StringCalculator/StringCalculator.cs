@@ -6,6 +6,7 @@ public class StringCalculator
 
     public int Add(string numbers)
     {
+        if (string.IsNullOrWhiteSpace(numbers)) return 0;
         var parsedString = ParseString(numbers);
         var digits = parsedString.numbers.Split(parsedString.delimiter.ToArray());
         return AddNumbers(digits);
@@ -22,7 +23,7 @@ public class StringCalculator
             {
                 delimiters.Add(numbers[index]);
                 index++;
-                if (index > numbers.Length)
+                if (index >= numbers.Length)
                     throw new Exception("Invalid arguments");
             }
 
@@ -43,7 +44,10 @@ public class StringCalculator
         var negativeNumber = new List<int>();
         foreach (var number in numbers)
         {
-            if (string.IsNullOrWhiteSpace(number)) continue;
+            if (string.IsNullOrWhiteSpace(number))
+            {
+                throw new Exception("Invalid arguments");
+            }
             if (int.TryParse(number, out var num))
             {
                 if (CheckIfNegative(num))
