@@ -8,33 +8,32 @@ public class StringCalculator
     {
         if (string.IsNullOrWhiteSpace(numbers)) return 0;
         var parsedString = ParseString(numbers);
-        var digits = parsedString.numbers.Split(parsedString.delimiter.ToArray());
+        var num =string.Join(string.Empty, parsedString.numbers);
+        var delimiters = parsedString.delimiter.ToArray();
+        var digits =num.Split(delimiters);
         return AddNumbers(digits);
     }
 
-    private (List<char> delimiter, string numbers) ParseString(string numbers)
+    private (List<char> delimiter,List<Char> numbers) ParseString(string numbers)
     {
         var delimiters = new List<char>();
-        var index = 0;
-        if (numbers.StartsWith("\\"))
+        var num =  new List<char>();
+        if (numbers.Contains('\\') && numbers.Contains('\n'))
         {
-            index = 1;
-            while (numbers[index] != '\n')
-            {
-                delimiters.Add(numbers[index]);
-                index++;
-                if (index >= numbers.Length)
-                    throw new Exception("Invalid arguments");
-            }
-
-            if (index < numbers.Length) index++;
+            delimiters = numbers.Skip(1).TakeWhile(s => s != '\n').ToList();
+            num = numbers.SkipWhile(n => n != '\n').Skip(1).ToList();
         }
-        else
+        else if(numbers.Contains('\\')&&!numbers.Contains('\n'))
         {
+            throw new Exception("Invalid arguments");
+        }
+        else if (!numbers.Contains('\\'))
+        {
+            num = numbers.Select(n => n).ToList();
             delimiters.Add(',');
         }
         delimiters.Add('\n');
-        return (delimiters, new string(numbers.Substring(index)));
+        return (delimiters, num);
     }
 
 
@@ -68,6 +67,7 @@ public class StringCalculator
         if (negativeNumber.Count>0) AnnouncingPresenceOfNegativeNumbers(negativeNumber);
         return sum;
     }
+    
     
     private bool CheckIfNegative(int num)
     {
