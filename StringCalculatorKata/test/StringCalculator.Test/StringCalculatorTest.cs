@@ -15,9 +15,10 @@ public class StringCalculatorTest
     {
         //Arrange
         var stringCalculator = new StringCalculator();
+        var bigNumber = 1000;
 
         // Act
-        var result = stringCalculator.Add(numbers);
+        var result = stringCalculator.Add(numbers,bigNumber);
 
         // Assert
         Assert.Equal(expectedResult, result);
@@ -32,9 +33,10 @@ public class StringCalculatorTest
     {
         //Arrange
         var stringCalculator = new StringCalculator();
-
+        var bigNumber = 1000;
+        
         // Act
-        var result = stringCalculator.Add(numbers);
+        var result = stringCalculator.Add(numbers,bigNumber);
 
         // Assert
         Assert.Equal(expectedResult, result);
@@ -48,9 +50,10 @@ public class StringCalculatorTest
     {
         //Arrange
         var stringCalculator = new StringCalculator();
+        var bigNumber = 1000;
 
         // Act
-        var result = stringCalculator.Add(numbers);
+        var result = stringCalculator.Add(numbers,bigNumber);
 
         // Assert
         Assert.Equal(expectedResult, result);
@@ -64,9 +67,10 @@ public class StringCalculatorTest
     {
         //Arrange
         var stringCalculator = new StringCalculator();
+        var bigNumber = 1000;
 
         // Act
-        Action add = () => stringCalculator.Add(numbers);
+        Action add = () => stringCalculator.Add(numbers,bigNumber);
 
         // Assert
         var exception = Assert.Throws<Exception>(add);
@@ -81,9 +85,10 @@ public class StringCalculatorTest
     {
         //Arrange
         var stringCalculator = new StringCalculator();
+        var bigNumber = 1000;
 
         // Act
-        var result = stringCalculator.Add(numbers);
+        var result = stringCalculator.Add(numbers,bigNumber);
 
         // Assert
         Assert.Equal(expectedResult, result);
@@ -100,9 +105,10 @@ public class StringCalculatorTest
     {
         // Arrange
         var stringCalculator = new StringCalculator();
+        var bigNumber = 1000;
 
         // Act
-        Action add = () => stringCalculator.Add(numbers);
+        Action add = () => stringCalculator.Add(numbers,bigNumber);
 
         // Assert
         var exception = Assert.Throws<Exception>(add);
