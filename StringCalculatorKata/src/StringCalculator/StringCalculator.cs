@@ -2,16 +2,14 @@ namespace StringCalculator;
 
 public class StringCalculator
 {
-    public const int BigNumber = 1000;
-
-    public int Add(string numbers)
+    public int Add(string numbers,int bigNumber)
     {
         if (string.IsNullOrWhiteSpace(numbers)) return 0;
         var parsedString = ParseString(numbers);
         var num = string.Join(string.Empty, parsedString.numbers);
         var delimiters = parsedString.delimiter.ToArray();
         var digits = num.Split(delimiters);
-        return AddNumbers(digits);
+        return AddNumbers(digits,bigNumber);
     }
 
     private (List<char> delimiter, List<char> numbers) ParseString(string numbers)
@@ -32,13 +30,12 @@ public class StringCalculator
             num = numbers.Select(n => n).ToList();
             delimiters.Add(',');
         }
-
         delimiters.Add('\n');
         return (delimiters, num);
     }
 
 
-    private int AddNumbers(string[] numbers)
+    private int AddNumbers(string[] numbers,int bigNumber)
     {
         if (numbers.Any(string.IsNullOrWhiteSpace)) throw new Exception("Invalid arguments");
 
@@ -48,7 +45,7 @@ public class StringCalculator
         }
         var negativeNumber = numbers.Select(int.Parse).Where(CheckIfNegative).ToList();
         if (negativeNumber.Any()) AnnouncingPresenceOfNegativeNumbers(negativeNumber);
-        return numbers.Select(int.Parse).Where(num => num <= BigNumber).Sum();
+        return numbers.Select(int.Parse).Where(num => num <= bigNumber).Sum();
     }
 
 
